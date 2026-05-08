@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto – CompuElectric</title>
+  <meta name="description" content="Contáctanos para cotizaciones, reparaciones o consultas. CompuElectric Lima.">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <script src="https://kit.fontawesome.com/812c8ee19a.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/contactos.css">
+</head>
+
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar-left">
+        <span><i class="fa-solid fa-location-dot"></i>Lima, Perú</span>
+        <span><i class="fa-regular fa-clock"></i>Lun – Sáb: 9am – 7pm</span>
+      </div>
+      <div class="topbar-right">
+        <a href="tel:+51997679527"><i class="fa-solid fa-phone"></i>997 679 527</a>
+        <a href="mailto:compuelectric.777@gmail.com"><i class="fa-solid fa-envelope"></i>compuelectric.777@gmail.com</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="container nav-inner">
+      <a href="index.html"><img src="img/logo.png" alt="CompuElectric" class="logo"></a>
+      <div class="nav-links">
+        <a href="index.html">Inicio</a>
+        <a href="reparaciones.html">Reparaciones</a>
+        <a href="instalaciones.html">Instalaciones</a>
+        <a href="productos.html">Productos</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="contactos.html" class="active">Contacto</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html">Inicio</a>
+      <a href="reparaciones.html">Reparaciones</a>
+      <a href="instalaciones.html">Instalaciones</a>
+      <a href="productos.html">Productos</a>
+      <a href="nosotros.html">Nosotros</a>
+      <a href="contactos.html">Contacto</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero-int">
+    <div class="hero-int-bg"></div>
+    <div class="hero-int-overlay"></div>
+    <div class="container" style="position:relative;z-index:2;">
+      <div class="breadcrumb">
+        <a href="index.html">Inicio</a>
+        <i class="fa-solid fa-chevron-right"></i>
+        <span>Contacto</span>
+      </div>
+      <h1>Hablemos de<br><span>tu proyecto</span></h1>
+      <p>Completa el formulario y te respondemos en menos de 1 hora. También puedes escribirnos directo al WhatsApp.</p>
+    </div>
+  </section>
+
+  <!-- CONTACTO PRINCIPAL -->
+  <section class="section">
+    <div class="container">
+      <div class="contacto-grid">
+
+        <!-- FORMULARIO -->
+        <div class="form-card reveal">
+          <span class="tag">Escríbenos</span>
+          <h2 class="section-title">Déjanos tus datos</h2>
+          <p class="section-sub">Te contactaremos a la brevedad posible.</p>
+
+          <div id="alerta" class="alerta" style="display:none"></div>
+
+          <form id="formulario" class="formulario" novalidate>
+            <div class="campo-grid">
+              <div class="campo">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+              </div>
+              <div class="campo">
+                <label for="apellido">Apellido</label>
+                <input type="text" id="apellido" name="apellido" placeholder="Tu apellido" required>
+              </div>
+            </div>
+            <div class="campo">
+              <label for="distrito">Distrito</label>
+              <select id="distrito" name="distrito" required>
+                <option value="" disabled selected>Selecciona tu distrito</option>
+                <option>Ancón</option>
+                <option>Ate</option>
+                <option>Barranco</option>
+                <option>Breña</option>
+                <option>Carabayllo</option>
+                <option>Chaclacayo</option>
+                <option>Chorrillos</option>
+                <option>Cieneguilla</option>
+                <option>Comas</option>
+                <option>El Agustino</option>
+                <option>Independencia</option>
+                <option>Jesús María</option>
+                <option>La Molina</option>
+                <option>La Victoria</option>
+                <option>Lince</option>
+                <option>Los Olivos</option>
+                <option>Lurigancho</option>
+                <option>Lurín</option>
+                <option>Magdalena del Mar</option>
+                <option>Miraflores</option>
+                <option>Pachacámac</option>
+                <option>Pucusana</option>
+                <option>Pueblo Libre</option>
+                <option>Puente Piedra</option>
+                <option>Punta Hermosa</option>
+                <option>Punta Negra</option>
+                <option>Rímac</option>
+                <option>San Bartolo</option>
+                <option>San Borja</option>
+                <option>San Isidro</option>
+                <option>San Juan de Lurigancho</option>
+                <option>San Juan de Miraflores</option>
+                <option>San Luis</option>
+                <option>San Martín de Porres</option>
+                <option>San Miguel</option>
+                <option>Santa Anita</option>
+                <option>Santa María del Mar</option>
+                <option>Santa Rosa</option>
+                <option>Santiago de Surco</option>
+                <option>Surquillo</option>
+                <option>Villa El Salvador</option>
+                <option>Villa María del Triunfo</option>
+                <option>Otro.....</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label for="celular">Celular</label>
+              <input type="tel" id="celular" name="celular" placeholder="Ej: 987 654 321" required>
+            </div>
+            <div class="campo">
+              <label for="motivo">Motivo <span
+                  style="color:var(--muted);font-weight:400;font-size:.85em">(opcional)</span></label>
+              <textarea id="motivo" name="motivo" placeholder="Ej: Quiero reparar mi laptop, consulta de precios..."
+                rows="3"></textarea>
+            </div>
+            <button type="submit" id="btn-enviar" class="btn btn-submit">
+              Enviar mensaje <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </form>
+
+          <div class="form-extra">
+            <div class="horario-box">
+              <h4><i class="fa-regular fa-clock"></i> Horario de atención</h4>
+              <div class="horario-list">
+                <div class="horario-item">
+                  <span>Lunes – Viernes</span>
+                  <span class="horario-hora">9:00am – 7:00pm</span>
+                </div>
+                <div class="horario-item">
+                  <span>Sábado</span>
+                  <span class="horario-hora">9:00am – 5:00pm</span>
+                </div>
+                <div class="horario-item domingo">
+                  <span>Domingo</span>
+                  <span class="horario-hora cerrado">Cerrado</span>
+                </div>
+              </div>
+            </div>
+            <div class="garantias-box">
+              <div class="garantia-item"><i class="fa-solid fa-shield-halved"></i><span>Garantía escrita en cada
+                  servicio</span></div>
+              <div class="garantia-item"><i class="fa-solid fa-clock"></i><span>Respondemos en menos de 1 hora</span>
+              </div>
+              <div class="garantia-item"><i class="fa-solid fa-truck-fast"></i><span>Servicio a domicilio en Lima</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- INFO DE CONTACTO -->
+        <div class="info-col reveal" style="transition-delay:.1s">
+          <span class="tag">Información</span>
+          <h2 class="section-title">Otras formas de contacto</h2>
+
+          <div class="info-cards">
+            <a href="https://wa.me/51997679527" target="_blank" class="info-card info-wa">
+              <div class="info-icon"><i class="fa-brands fa-whatsapp"></i></div>
+              <div>
+                <h4>WhatsApp</h4>
+                <p>+51 997 679 527</p>
+                <span>Respuesta inmediata</span>
+              </div>
+            </a>
+            <a href="tel:+51944598747" class="info-card">
+              <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
+              <div>
+                <h4>Teléfono</h4>
+                <p>944 598 747 / (01) 6778585</p>
+                <span>Lun – Sáb: 9am – 7pm</span>
+              </div>
+            </a>
+            <a href="mailto:compuelectric.777@gmail.com" class="info-card">
+              <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
+              <div>
+                <h4>Email</h4>
+                <p>compuelectric.777@gmail.com</p>
+                <span>Respuesta en 24h</span>
+              </div>
+            </a>
+            <div class="info-card">
+              <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
+              <div>
+                <h4>Tienda física</h4>
+                <p>Av. Mexico 107, Lima</p>
+                <span>Lun – Sáb: 9am – 7pm</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-mapa">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d243.95313290071437!2d-77.05350681698367!3d-11.95717654850566!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105cfd4632d6bef%3A0xcd299c7606930bfb!2sMexico%20107%2C%20Lima%2015311!5e0!3m2!1ses!2spe!4v1774718735251!5m2!1ses!2spe"
+              width="100%" height="280" style="border:0;" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="img/logo.png" alt="CompuElectric" class="footer-logo">
+          <p>Empresa peruana especializada en reparación de equipos tecnológicos y venta de componentes electrónicos
+            desde 2016.</p>
+          <div class="footer-social">
+            <a href="https://www.facebook.com/profile.php?id=61575279149696" target="_blank" aria-label="Facebook"><i
+                class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/compu_electric_/" target="_blank" aria-label="Instagram"><i
+                class="fa-brands fa-instagram"></i></a>
+            <a href="https://wa.me/51997679527" target="_blank" aria-label="WhatsApp"><i
+                class="fa-brands fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4>Navegación</h4>
+          <ul>
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="reparaciones.html">Reparaciones</a></li>
+            <li><a href="instalaciones.html">Instalaciones</a></li>
+            <li><a href="productos.html">Productos</a></li>
+            <li><a href="contactos.html">Contacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Servicios</h4>
+          <ul>
+            <li><span>Reparación de Laptops</span></li>
+            <li><span>Reparación de PCs</span></li>
+            <li><span>Reparación de Impresoras</span></li>
+            <li><span>Instalaciones de Red</span></li>
+            <li><span>Servicio a Domicilio</span></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="tel:+51997679527"><i class="fa-solid fa-phone fa-xs"
+                  style="margin-right:6px;color:#7fb9ff"></i>997 679 527</a></li>
+            <li><a href="tel:+51944598747"><i class="fa-solid fa-phone fa-xs"
+                  style="margin-right:6px;color:#7fb9ff"></i>944 598 747</a></li>
+            <li><a href="tel:+5116778585"><i class="fa-solid fa-phone fa-xs"
+                  style="margin-right:6px;color:#7fb9ff"></i>(01) 6778585</a></li>
+            <li><a href="mailto:compuelectric.777@gmail.com"><i class="fa-solid fa-envelope fa-xs"
+                  style="margin-right:6px;color:#7fb9ff"></i>compuelectric.777@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 CompuElectric. Todos los derechos reservados.</p>
+        <p>Lima, Perú</p>
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/51997679527" class="wa-fab" aria-label="WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- Firebase SDK (módulos ESM desde CDN) -->
+  <script type="module">
+    import { initializeApp }
+      from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp }
+      from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB9LutSs1CNLCdSVX0ztILVXYcXKAyEBdA",
+      authDomain: "compueletric-48f65.firebaseapp.com",
+      projectId: "compueletric-48f65",
+      storageBucket: "compueletric-48f65.firebasestorage.app",
+      messagingSenderId: "426935828773",
+      appId: "1:426935828773:web:1dee69667e5f4f699bdacc"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Hamburger
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(r => observer.observe(r));
+
+    // Envío del formulario → Firestore
+    document.getElementById('formulario').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const nombre = document.getElementById('nombre').value.trim();
+      const apellido = document.getElementById('apellido').value.trim();
+      const distrito = document.getElementById('distrito').value.trim();
+      const celular = document.getElementById('celular').value.trim();
+      const motivo = document.getElementById('motivo').value.trim();
+
+      if (!nombre || !apellido || !distrito || !celular) {
+        mostrarAlerta('Por favor completa todos los campos.', 'error');
+        return;
+      }
+
+      const btn = document.getElementById('btn-enviar');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Enviando...';
+
+      try {
+        await addDoc(collection(db, 'contactos'), {
+          nombre,
+          apellido,
+          distrito,
+          celular,
+          motivo: motivo || null,   // ← agrega esta línea
+
+          fecha: serverTimestamp()
+        });
+
+        mostrarAlerta(`¡Gracias ${nombre}! Nos pondremos en contacto contigo pronto.`, 'exito');
+        this.reset();
+      } catch (err) {
+        console.error('Error Firestore:', err);
+        mostrarAlerta('Ocurrió un error al enviar. Intenta de nuevo o escríbenos por WhatsApp.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = 'Enviar mensaje <i class="fa-solid fa-paper-plane"></i>';
+      }
+    });
+
+    function mostrarAlerta(msg, tipo) {
+      const alerta = document.getElementById('alerta');
+      alerta.className = `alerta alerta-${tipo}`;
+      alerta.innerHTML = `<i class="fa-solid ${tipo === 'exito' ? 'fa-circle-check' : 'fa-circle-xmark'}"></i> ${msg}`;
+      alerta.style.display = 'flex';
+      setTimeout(() => { alerta.style.display = 'none'; }, 6000);
+    }
+  </script>
+</body>
+
+</html>

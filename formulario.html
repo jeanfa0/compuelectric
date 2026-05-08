@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin – CompuElectric</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/812c8ee19a.js" crossorigin="anonymous"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0b0f1a;
+      --surface:  #111827;
+      --surface2: #1a2235;
+      --border:   #1f2d45;
+      --accent:   #3b82f6;
+      --accent2:  #60a5fa;
+      --danger:   #ef4444;
+      --success:  #22c55e;
+      --text:     #e2e8f0;
+      --muted:    #64748b;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ══ LOGIN ══ */
+    #login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    #login-screen::before {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(59,130,246,.15) 0%, transparent 70%);
+      top: -100px; left: -100px;
+      pointer-events: none;
+    }
+    #login-screen::after {
+      content: '';
+      position: absolute;
+      width: 350px; height: 350px;
+      background: radial-gradient(circle, rgba(96,165,250,.1) 0%, transparent 70%);
+      bottom: -80px; right: -80px;
+      pointer-events: none;
+    }
+
+    .login-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px 36px;
+      width: 100%;
+      max-width: 400px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 24px 64px rgba(0,0,0,.6);
+      animation: fadeUp .5s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(20px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .login-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .login-logo img { height: 36px; }
+    .login-logo span {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--accent2);
+    }
+
+    .login-card h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .login-card > p {
+      color: var(--muted);
+      font-size: .88rem;
+      margin-bottom: 28px;
+    }
+
+    .campo { margin-bottom: 18px; }
+    .campo label {
+      display: block;
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 7px;
+    }
+    .campo .input-wrap { position: relative; }
+    .campo .input-wrap i {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: .82rem;
+    }
+    .campo input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 13px 11px 38px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .93rem;
+      transition: border-color .2s;
+      outline: none;
+    }
+    .campo input:focus { border-color: var(--accent); }
+
+    .btn-login {
+      width: 100%;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: .95rem;
+      cursor: pointer;
+      transition: background .2s, transform .15s;
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-login:hover { background: #2563eb; transform: translateY(-1px); }
+    .btn-login:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+    .login-error {
+      background: rgba(239,68,68,.12);
+      border: 1px solid rgba(239,68,68,.3);
+      color: #fca5a5;
+      border-radius: 10px;
+      padding: 11px 15px;
+      font-size: .86rem;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .login-error.show { display: flex; }
+
+    /* ══ DASHBOARD ══ */
+    #dashboard { display: none; }
+
+    .topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .topbar-brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .topbar-brand img { height: 30px; flex-shrink: 0; }
+    .topbar-brand span {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: .9rem;
+      color: var(--accent2);
+      white-space: nowrap;
+    }
+    .topbar-badge {
+      background: var(--accent);
+      color: #fff;
+      font-size: .65rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 99px;
+      flex-shrink: 0;
+    }
+    .topbar-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .topbar-email {
+      font-size: .78rem;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 180px;
+    }
+    .btn-logout {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .82rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      transition: all .2s;
+      white-space: nowrap;
+    }
+    .btn-logout:hover { border-color: var(--danger); color: var(--danger); }
+
+    .dashboard-body {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    .dash-header { margin-bottom: 24px; }
+    .dash-header h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+    }
+    .dash-header p { color: var(--muted); margin-top: 4px; font-size: .9rem; }
+
+    /* Stats */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      animation: fadeUp .4s ease both;
+    }
+    .stat-icon {
+      width: 42px; height: 42px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .stat-icon.blue  { background: rgba(59,130,246,.15); color: var(--accent2); }
+    .stat-icon.green { background: rgba(34,197,94,.15);  color: var(--success); }
+    .stat-info span {
+      display: block; font-size: .75rem; color: var(--muted);
+      text-transform: uppercase; letter-spacing: .07em; font-weight: 600;
+    }
+    .stat-info strong {
+      font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800;
+    }
+
+    /* Controls */
+    .controls { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .search-wrap { position: relative; flex: 1; }
+    .search-wrap i {
+      position: absolute; left: 13px; top: 50%;
+      transform: translateY(-50%); color: var(--muted); font-size: .82rem;
+    }
+    .search-wrap input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 13px 10px 36px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .88rem;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .search-wrap input:focus { border-color: var(--accent); }
+    .search-wrap input::placeholder { color: var(--muted); }
+
+    .btn-refresh {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .85rem;
+      cursor: pointer;
+      display: flex; align-items: center; gap: 7px;
+      transition: all .2s; white-space: nowrap; flex-shrink: 0;
+    }
+    .btn-refresh:hover { border-color: var(--accent); color: var(--accent2); }
+    .btn-refresh.spinning i { animation: spin .6s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Tabla */
+    .table-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      background: var(--surface2);
+      padding: 13px 18px;
+      text-align: left;
+      font-size: .72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .1em;
+      color: var(--muted); border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background .15s;
+      animation: fadeUp .3s ease both;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--surface2); }
+    tbody td { padding: 14px 18px; font-size: .88rem; vertical-align: middle; }
+
+    .td-name { display: flex; align-items: center; gap: 10px; }
+    .avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: .82rem; color: #fff; flex-shrink: 0;
+    }
+    .name-info strong { display: block; font-weight: 600; font-size: .9rem; }
+    .name-info span { font-size: .75rem; color: var(--muted); }
+
+    .badge-distrito {
+      background: rgba(59,130,246,.12); color: var(--accent2);
+      border: 1px solid rgba(59,130,246,.2);
+      border-radius: 6px; padding: 3px 9px;
+      font-size: .78rem; font-weight: 500;
+    }
+    .celular-link {
+      display: flex; align-items: center; gap: 6px;
+      color: var(--text); text-decoration: none; font-weight: 500;
+    }
+    .celular-link:hover { color: var(--accent2); }
+    .fecha-text { font-size: .78rem; color: var(--muted); }
+
+    .loading-row td, .empty-row td {
+      text-align: center; padding: 60px 20px; color: var(--muted);
+    }
+    .loading-row i { font-size: 1.8rem; animation: spin .8s linear infinite; display: block; margin-bottom: 10px; }
+    .empty-row i { font-size: 2.2rem; display: block; margin-bottom: 10px; opacity: .4; }
+
+    /* Cards móvil */
+    .cards-list { display: none; flex-direction: column; gap: 12px; }
+    .contact-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 16px;
+      animation: fadeUp .3s ease both;
+    }
+    .contact-card-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .card-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: .88rem; color: #fff; flex-shrink: 0;
+    }
+    .card-name strong { display: block; font-weight: 600; }
+    .card-name span { font-size: .78rem; color: var(--muted); }
+    .card-num { margin-left: auto; font-size: .75rem; color: var(--muted); font-weight: 600; }
+    .card-body { display: flex; flex-direction: column; gap: 8px; font-size: .86rem; }
+    .card-row { display: flex; align-items: flex-start; gap: 8px; }
+    .card-row i { color: var(--muted); font-size: .78rem; margin-top: 2px; width: 14px; flex-shrink: 0; }
+    .card-row span { color: var(--text); line-height: 1.4; }
+    .card-footer {
+      margin-top: 12px; padding-top: 12px;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 20px; right: 20px; left: 20px;
+      max-width: 300px; margin: 0 auto;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 12px 16px;
+      display: flex; align-items: center; gap: 10px;
+      font-size: .86rem; box-shadow: 0 8px 32px rgba(0,0,0,.5);
+      z-index: 999; transform: translateY(80px); opacity: 0;
+      transition: all .3s ease;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success i { color: var(--success); }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width: 639px) {
+      .topbar-badge, .topbar-email { display: none; }
+      .btn-logout .logout-text { display: none; }
+      .btn-refresh .refresh-text { display: none; }
+      .btn-refresh { padding: 10px 12px; }
+      .dash-header h1 { font-size: 1.3rem; }
+      .table-wrap { display: none; }
+      .cards-list { display: flex; }
+      .login-card { padding: 32px 24px; }
+    }
+    @media (min-width: 640px) {
+      .toast { left: auto; right: 24px; bottom: 24px; margin: 0; }
+      .topbar { padding: 0 28px; }
+      .dashboard-body { padding: 36px 28px 60px; }
+      .cards-list { display: none; }
+      .table-wrap { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ LOGIN ══ -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <img src="img/logo.png" alt="CompuElectric" onerror="this.style.display='none'">
+      <span>CompuElectric</span>
+    </div>
+    <h2>Panel de Admin</h2>
+    <p>Ingresa con tu cuenta de administrador.</p>
+
+    <div class="login-error" id="login-error">
+      <i class="fa-solid fa-circle-xmark"></i>
+      <span id="login-error-msg">Correo o contraseña incorrectos.</span>
+    </div>
+
+    <div class="campo">
+      <label>Correo electrónico</label>
+      <div class="input-wrap">
+        <i class="fa-solid fa-envelope"></i>
+        <input type="email" id="input-email" placeholder="admin@compuelectric.com" autocomplete="email">
+      </div>
+    </div>
+    <div class="campo">
+      <label>Contraseña</label>
+      <div class="input-wrap">
+        <i class="fa-solid fa-lock"></i>
+        <input type="password" id="input-pass" placeholder="••••••••" autocomplete="current-password">
+      </div>
+    </div>
+    <button class="btn-login" id="btn-login">
+      <i class="fa-solid fa-right-to-bracket"></i> Ingresar
+    </button>
+  </div>
+</div>
+
+<!-- ══ DASHBOARD ══ -->
+<div id="dashboard">
+  <header class="topbar">
+    <div class="topbar-brand">
+      <img src="img/logo.png" alt="CompuElectric" onerror="this.style.display='none'">
+      <span>CompuElectric</span>
+      <span class="topbar-badge">ADMIN</span>
+    </div>
+    <div class="topbar-right">
+      <span class="topbar-email" id="topbar-email"></span>
+      <button class="btn-logout" id="btn-logout">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span class="logout-text">Cerrar sesión</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="dashboard-body">
+    <div class="dash-header">
+      <h1>Mensajes del formulario</h1>
+      <p>Todos los contactos enviados desde el sitio web.</p>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card" style="animation-delay:.05s">
+        <div class="stat-icon blue"><i class="fa-solid fa-envelope"></i></div>
+        <div class="stat-info">
+          <span>Total mensajes</span>
+          <strong id="stat-total">—</strong>
+        </div>
+      </div>
+      <div class="stat-card" style="animation-delay:.1s">
+        <div class="stat-icon green"><i class="fa-solid fa-calendar-day"></i></div>
+        <div class="stat-info">
+          <span>Hoy</span>
+          <strong id="stat-hoy">—</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="search-wrap">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="buscador" placeholder="Buscar por nombre, distrito, celular…">
+      </div>
+      <button class="btn-refresh" id="btn-refresh">
+        <i class="fa-solid fa-rotate-right"></i>
+        <span class="refresh-text">Actualizar</span>
+      </button>
+    </div>
+
+    <!-- Tabla desktop -->
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Cliente</th>
+            <th>Distrito</th>
+            <th>Motivo</th>
+            <th>Celular</th>
+            <th>Fecha</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-body">
+          <tr class="loading-row">
+            <td colspan="6">
+              <i class="fa-solid fa-circle-notch"></i>
+              Cargando datos…
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Cards móvil -->
+    <div class="cards-list" id="cards-list"></div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <i class="fa-solid fa-circle-check"></i>
+  <span id="toast-msg"></span>
+</div>
+
+<script type="module">
+  import { initializeApp }
+    from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+  import { getFirestore, collection, getDocs, orderBy, query }
+    from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+  import {
+    getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey:            "AIzaSyB9LutSs1CNLCdSVX0ztILVXYcXKAyEBdA",
+    authDomain:        "compueletric-48f65.firebaseapp.com",
+    projectId:         "compueletric-48f65",
+    storageBucket:     "compueletric-48f65.firebasestorage.app",
+    messagingSenderId: "426935828773",
+    appId:             "1:426935828773:web:1dee69667e5f4f699bdacc"
+  };
+
+  const app  = initializeApp(firebaseConfig);
+  const db   = getFirestore(app);
+  const auth = getAuth(app);
+
+  let todosLosContactos = [];
+
+  // ── AUTH STATE: detecta si ya hay sesión activa ──
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      mostrarDashboard(user);
+      cargarContactos();
+    } else {
+      mostrarLogin();
+    }
+  });
+
+  function mostrarLogin() {
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('dashboard').style.display = 'none';
+  }
+
+  function mostrarDashboard(user) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    document.getElementById('topbar-email').textContent = user.email;
+  }
+
+  // ── LOGIN ──
+  async function intentarLogin() {
+    const email = document.getElementById('input-email').value.trim();
+    const pass  = document.getElementById('input-pass').value;
+    const err   = document.getElementById('login-error');
+    const btn   = document.getElementById('btn-login');
+
+    if (!email || !pass) {
+      document.getElementById('login-error-msg').textContent = 'Completa todos los campos.';
+      err.classList.add('show');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Ingresando…';
+
+    try {
+      await signInWithEmailAndPassword(auth, email, pass);
+      // onAuthStateChanged se encarga del resto
+    } catch (e) {
+      let msg = 'Correo o contraseña incorrectos.';
+      if (e.code === 'auth/too-many-requests') msg = 'Demasiados intentos. Intenta más tarde.';
+      if (e.code === 'auth/invalid-email')     msg = 'El correo no es válido.';
+      document.getElementById('login-error-msg').textContent = msg;
+      err.classList.add('show');
+      document.getElementById('input-pass').value = '';
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Ingresar';
+    }
+  }
+
+  document.getElementById('btn-login').addEventListener('click', intentarLogin);
+  document.getElementById('input-pass').addEventListener('keydown', e => { if (e.key === 'Enter') intentarLogin(); });
+  document.getElementById('input-email').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('input-pass').focus(); });
+
+  // ── LOGOUT ──
+  document.getElementById('btn-logout').addEventListener('click', async () => {
+    await signOut(auth);
+  });
+
+  // ── CARGAR CONTACTOS ──
+  async function cargarContactos() {
+    const btn = document.getElementById('btn-refresh');
+    btn.classList.add('spinning');
+    try {
+      const snap = await getDocs(query(collection(db, 'contactos'), orderBy('fecha', 'desc')));
+      todosLosContactos = snap.docs.map((doc, i) => ({ id: doc.id, num: snap.docs.length - i, ...doc.data() }));
+      actualizarStats();
+      renderAll(todosLosContactos);
+      mostrarToast('Datos actualizados');
+    } catch (err) {
+      console.error(err);
+      renderAll([]);
+    } finally {
+      btn.classList.remove('spinning');
+    }
+  }
+
+  // ── STATS ──
+  function actualizarStats() {
+    const hoyStr = new Date().toDateString();
+    document.getElementById('stat-total').textContent = todosLosContactos.length;
+    document.getElementById('stat-hoy').textContent   = todosLosContactos.filter(c => c.fecha?.toDate().toDateString() === hoyStr).length;
+  }
+
+  // ── HELPER FECHA ──
+  function getFecha(c) {
+    if (!c.fecha?.toDate) return '—';
+    const d = c.fecha.toDate();
+    return d.toLocaleDateString('es-PE', { day:'2-digit', month:'short', year:'numeric' })
+         + ' · ' + d.toLocaleTimeString('es-PE', { hour:'2-digit', minute:'2-digit' });
+  }
+
+  // ── RENDER TABLA ──
+  function renderTabla(data) {
+    const tbody = document.getElementById('tabla-body');
+    if (!data.length) {
+      tbody.innerHTML = `<tr class="empty-row"><td colspan="6"><i class="fa-regular fa-folder-open"></i>No hay mensajes aún.</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = data.map((c, idx) => {
+      const ini = `${(c.nombre||'?')[0]}${(c.apellido||'?')[0]}`.toUpperCase();
+      const cel = (c.celular||'').replace(/\s/g,'');
+      return `
+        <tr style="animation-delay:${idx*.04}s">
+          <td style="color:var(--muted);font-size:.78rem;font-weight:600">${c.num}</td>
+          <td>
+            <div class="td-name">
+              <div class="avatar">${ini}</div>
+              <div class="name-info">
+                <strong>${c.nombre||''} ${c.apellido||''}</strong>
+                <span>ID: ${c.id.slice(0,8)}…</span>
+              </div>
+            </div>
+          </td>
+          <td><span class="badge-distrito">${c.distrito||'—'}</span></td>
+          <td style="max-width:200px;font-size:.85rem;color:${c.motivo?'var(--text)':'var(--muted)'};font-style:${c.motivo?'normal':'italic'}">${c.motivo||'—'}</td>
+          <td><a class="celular-link" href="tel:${cel}"><i class="fa-solid fa-phone" style="font-size:.72rem;color:var(--muted)"></i>${c.celular||'—'}</a></td>
+          <td><span class="fecha-text">${getFecha(c)}</span></td>
+        </tr>`;
+    }).join('');
+  }
+
+  // ── RENDER CARDS (móvil) ──
+  function renderCards(data) {
+    const list = document.getElementById('cards-list');
+    if (!data.length) {
+      list.innerHTML = `<div style="text-align:center;padding:48px 0;color:var(--muted)"><i class="fa-regular fa-folder-open" style="font-size:2rem;display:block;margin-bottom:10px;opacity:.4"></i>No hay mensajes aún.</div>`;
+      return;
+    }
+    list.innerHTML = data.map((c, idx) => {
+      const ini = `${(c.nombre||'?')[0]}${(c.apellido||'?')[0]}`.toUpperCase();
+      const cel = (c.celular||'').replace(/\s/g,'');
+      return `
+        <div class="contact-card" style="animation-delay:${idx*.05}s">
+          <div class="contact-card-top">
+            <div class="card-avatar">${ini}</div>
+            <div class="card-name">
+              <strong>${c.nombre||''} ${c.apellido||''}</strong>
+              <span><span class="badge-distrito">${c.distrito||'—'}</span></span>
+            </div>
+            <span class="card-num">#${c.num}</span>
+          </div>
+          <div class="card-body">
+            ${c.motivo ? `<div class="card-row"><i class="fa-solid fa-comment-dots"></i><span>${c.motivo}</span></div>` : ''}
+          </div>
+          <div class="card-footer">
+            <span class="fecha-text">${getFecha(c)}</span>
+            <a class="celular-link" href="tel:${cel}"><i class="fa-solid fa-phone" style="font-size:.75rem"></i>${c.celular||'—'}</a>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  function renderAll(data) { renderTabla(data); renderCards(data); }
+
+  // ── BUSCADOR ──
+  document.getElementById('buscador').addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    renderAll(todosLosContactos.filter(c =>
+      `${c.nombre} ${c.apellido} ${c.distrito} ${c.celular} ${c.motivo||''}`.toLowerCase().includes(q)
+    ));
+  });
+
+  document.getElementById('btn-refresh').addEventListener('click', cargarContactos);
+
+  // ── TOAST ──
+  function mostrarToast(msg) {
+    const t = document.getElementById('toast');
+    document.getElementById('toast-msg').textContent = msg;
+    t.classList.add('show','success');
+    setTimeout(() => t.classList.remove('show','success'), 3000);
+  }
+</script>
+</body>
+</html>
